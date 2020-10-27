@@ -4,9 +4,11 @@ namespace SpriteKind {
     export const amorb = SpriteKind.create()
     export const armorc = SpriteKind.create()
 }
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorLightMoss, function (sprite, location) {
+    tiles.placeOnRandomTile(mySprite4, sprites.dungeon.hazardLava1)
+})
 function makemap () {
-    tiles.setTilemap(tilemap`level_2`)
-    mySprite4.say("Level 1", 1000)
+	
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairLadder, function (sprite, location) {
     tiles.setTilemap(tilemap`level_2`)
@@ -78,10 +80,15 @@ info.onLifeZero(function () {
     game.reset()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
-	
+    info.changeScoreBy(1)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     mySprite4.destroy(effects.rings, 500)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorDark3, function (sprite, location) {
+    info.changeLifeBy(-1)
+    game.reset()
+    info.setLife(randint(1, 5))
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     info.changeLifeBy(-5)
@@ -94,6 +101,7 @@ let middle_mouse_button_pressed = 0
 let if_score_at_0 = 0
 let mySprite22: Sprite = null
 let mySprite4: Sprite = null
+tiles.setTilemap(tilemap`level_1`)
 let mySprite6 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -156,12 +164,12 @@ mySprite22 = sprites.create(img`
     . f 6 1 1 1 1 1 1 6 6 6 f . . . 
     . . c c c c c c c c c f . . . . 
     `, SpriteKind.Enemy)
+tiles.placeOnRandomTile(mySprite4, sprites.dungeon.floorLight5)
 mySprite4.setFlag(SpriteFlag.StayInScreen, true)
 mySprite4.setFlag(SpriteFlag.StayInScreen, true)
-makemap()
-info.setLife(50)
+info.setLife(5)
 info.setScore(10)
-tiles.placeOnRandomTile(mySprite22, sprites.dungeon.floorDarkDiamond)
+tiles.placeOnRandomTile(mySprite22, sprites.dungeon.purpleInnerNorthWest)
 if (if_score_at_0) {
     game.over(false)
 } else {
@@ -301,7 +309,8 @@ game.onUpdateInterval(2000, function () {
         . f 6 1 1 1 1 1 1 6 6 6 f . . . 
         . . c c c c c c c c c f . . . . 
         `, SpriteKind.Enemy)
+    tiles.placeOnRandomTile(mySprite22, sprites.dungeon.purpleInnerNorthWest)
 })
-game.onUpdateInterval(10000, function () {
+game.onUpdateInterval(1000000, function () {
     info.changeScoreBy(-1)
 })
